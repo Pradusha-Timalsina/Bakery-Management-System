@@ -3,8 +3,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 
-
-
 from .forms import CreateUserForm
 from .models import Customer,Product
 

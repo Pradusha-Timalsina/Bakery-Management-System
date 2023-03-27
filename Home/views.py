@@ -23,13 +23,30 @@ def about_view(request):
     return render(request,"about.html")
 
 def shop_view(request):
-    return render(request,"shop-left-sidebar.html")
+    product = Product.objects.all()
+    email = None
+    if request.user.is_authenticated:
+        email = request.user.email
+ 
+    context = {'products':product,
+               'email': email}
+    return render(request,"shop-left-sidebar.html",context=context)
 
 def contact_view(request):
     return render(request,"contact.html")
 
 def my_account_view(request):
     return render(request,"my-account.html")
+
+def product_view(request):
+    product = Product.objects.all()
+    email = None
+    if request.user.is_authenticated:
+        email = request.user.email
+ 
+    context = {'products':product,
+               'email': email}
+    return render(request,"single-product.html",context=context)
 
 
 

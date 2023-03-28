@@ -337,19 +337,19 @@
                         </div>
                         <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
                             <div class="myaccount-details">
-                                <form action="#" class="myaccount-form">
+                                <form action="#" class="myaccount-form" method = "POST">
                                     <div class="myaccount-form-inner">
                                         <div class="single-input single-input-half">
                                             <label>First Name*</label>
-                                            <input type="text">
+                                            <input type="text" value = "{{user.first_name}}">
                                         </div>
                                         <div class="single-input single-input-half">
                                             <label>Last Name*</label>
-                                            <input type="text">
+                                            <input type="text" value = "{{user.last_name}}">
                                         </div>
                                         <div class="single-input">
                                             <label>Email*</label>
-                                            <input type="email">
+                                            <input type="email" value = "{{user.email}}">
                                         </div>
                                         <div class="single-input">
                                             <label>Current Password(leave blank to leave
@@ -399,7 +399,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="single_shipping d-flex align-items-center">
                             <div class="shipping_icon">
-                                <img src="assets/img/others/shipping2.png" alt="">
+                                <img src="{% static 'img/others/shipping2.png'%}" alt="">
                             </div>
                             <div class="shipping_text">
                                 <h3>Card Payments</h3>
@@ -410,7 +410,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="single_shipping d-flex align-items-center">
                             <div class="shipping_icon">
-                                <img src="assets/img/others/shipping3.png" alt="">
+                                <img src="{% static 'img/others/shipping3.png'%}" alt="">
                             </div>
                             <div class="shipping_text">
                                 <h3>Easy Returns</h3>
@@ -427,7 +427,7 @@
                             <div class="footer_widget_list contact footer_list_width">
                                 <h3>Contact Us</h3>
                                 <div class="footer_contact_desc">
-                                    <p>If you have any question.please contact us at <a href="#">demo@example.com</a></p>
+                                    <p>If you have any question.please contact us at <a href="">demo@example.com</a></p>
                                 </div>
                                 <div class="footer_contact_info">
                                     <div class="footer_contact_info_list d-flex align-items-center">
@@ -457,13 +457,13 @@
                                     <h3>Information</h3>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="about.html"> About us</a></li>
-                                            <li><a href="contact.html">Delivery information</a></li>
-                                            <li><a href="contact.html">Privacy Policy</a></li>
-                                            <li><a href="contact.html">Sales</a></li>
-                                            <li><a href="contact.html">Terms & Conditions</a></li>
-                                            <li><a href="contact.html">Shipping Policy</a></li>
-                                            <li><a href="contact.html">EMI Payment</a></li>
+                                            <li><a href="{% url 'about'%}"> About us</a></li>
+                                            <li><a href="{% url 'contact'%}">Delivery information</a></li>
+                                            <li><a href="{% url 'contact'%}">Privacy Policy</a></li>
+                                            <li><a href="{% url 'contact'%}">Sales</a></li>
+                                            <li><a href="{% url 'contact'%}">Terms & Conditions</a></li>
+                                            <li><a href="{% url 'contact'%}">Shipping Policy</a></li>
+                                            <li><a href="{% url 'contact'%}">EMI Payment</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -471,13 +471,13 @@
                                     <h3>Account</h3>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="my-account.html"> My account</a></li>
-                                            <li><a href="contact.html">My orders</a></li>
-                                            <li><a href="contact.html">Returns</a></li>
-                                            <li><a href="contact.html">Shipping</a></li>
+                                            <li><a href="{% url 'acccount' %}"> My account</a></li>
+                                            <li><a href="{% url 'contact'%}">My orders</a></li>
+                                            <li><a href="{% url 'contact'%}">Returns</a></li>
+                                            <li><a href="{% url 'contact'%}">Shipping</a></li>
                                             <li><a href="wishlist.html">Wishlist</a></li>
-                                            <li><a href="about.html">How Does It Work</a></li>
-                                            <li><a href="login-register.html">Merchant Sign Up</a></li>
+                                            <li><a href="{% url 'about'%}">How Does It Work</a></li>
+                                            <li><a href="{% url 'login' %}">Merchant Sign Up</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -486,7 +486,7 @@
                                 <h3>newsletter</h3>
                                 <div class="footer_newsletter">
                                     <div class="newsletter_desc">
-                                        <p>If you have any question.please contact us at <a href="contact.html">Send Us a Email</a></p>
+                                        <p>If you have any question.please contact us at <a href="{% url 'contact'%}">Send Us a Email</a></p>
                                     </div>
 
                                     <div class="newsletter_subscribe">
@@ -506,17 +506,12 @@
                                         <!-- mailchimp-alerts end -->
                                     </div>
                                     <div class="footer_paypal">
-                                        <a href="#"><img src="assets/img/others/paypal.png" alt=""></a>
+                                        <a href="#"><img src="{% static 'img/others/paypal.png'%}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="footer_bottom">
-                <div class="copyright_right text-center">
-                    <p> © 2022 <a href="index.html"> Bucker.</a> Made with <i class="ion-heart"></i> by <a href="https://themeforest.net/user/codecarnival/portfolio">CodeCarnival</a></p>
                 </div>
             </div>
         </div>
@@ -526,20 +521,20 @@
     <!-- JS
 ============================================ -->
 
-    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/jquery.scrollup.min.js"></script>
-    <script src="assets/js/jquery.nice-select.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/mailchimp-ajax.js"></script>
-    <script src="assets/js/jquery-ui.min.js"></script>
-    <script src="assets/js/jquery.zoom.min.js"></script>
+    <script src="{% static 'js/vendor/jquery-3.6.0.min.js'%}"></script>
+    <script src="{% static 'js/vendor/jquery-migrate-3.3.2.min.js'%}"></script>
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'js/slick.min.js'%}"></script>
+    <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'js/wow.min.js'%}"></script>
+    <script src="{% static 'js/jquery.scrollup.min.js'%}"></script>
+    <script src="{% static 'js/jquery.nice-select.js'%}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js'%}"></script>
+    <script src="{% static 'js/mailchimp-ajax.js'%}"></script>
+    <script src="{% static 'js/jquery-ui.min.js'%}"></script>
+    <script src="{% static 'js/jquery.zoom.min.js'%}"></script>
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="{% static 'js/main.js'%}"></script>
 
 
 </body>

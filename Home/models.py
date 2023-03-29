@@ -4,12 +4,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Customer(models.Model):
-    user = models.OneToOneField(User,on_delete = models.CASCADE,null=True,blank=True)
-    name = models.CharField(max_length=200,null=True)
-    email = models.EmailField(max_length=200,null=True)
+    username = models.OneToOneField(User,on_delete = models.CASCADE,null=False,blank=False)
+    first_name = models.CharField(max_length=50,null=False)
+    last_name = models.CharField(max_length=50,null=False)
+    email = models.EmailField(max_length=200,null=False)
+    phone_number = models.IntegerField(max_length=10,null=False)
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
 
 class Product(models.Model):

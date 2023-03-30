@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -265,7 +266,9 @@
                                 </div>
                                 
                                 <div class="col-lg-19 pt-5">
-                                    <button class="btn custom-btn md-size" onclick="{% url 'index'%}">Home</button>
+                                    <a href="{% url 'login'%}">
+                                        <button class="btn custom-btn md-size">Login</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

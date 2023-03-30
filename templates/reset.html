@@ -254,35 +254,16 @@
         </div>
     </div>
     <!-- breadcrumbs area end -->
-    <div>
+    <h1>Enter new password</h1><br>
         <form method="post">
             {% csrf_token %}
-            <div class="login-form">
-                <h4 class="login-title">reset</h4>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <label>New Password</label>
-                        {{form.password1}}
-                    </div>
-                    <div class="col-lg-12">
-                        <label> confirm Password</label>
-                        {{form.password2}}
-                    </div>
-                    <div>
-                        <ul>
-                            <li>* Use a strong password</li>
-                            <li>* Don't use easily guessed information like your name, birthdate, or social security number</li>
-                            <li>* Don't reuse passwords</li>
-                            <li>* Don't share your password</li>
-                        </ul>
-                        <div class="col-lg-12 pt-5">
-                            <button type="submit" class="btn custom-btn md-size">Submit</button>
-                        </div>
-                    </div>
-                </div>
+            {{form}}
+            <input type="Submit" name="Update Password">
+           
+               
             </div>
         </form>
-    </div>
+   
     
     <!--footer area start-->
     <footer class="footer_widgets">

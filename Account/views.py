@@ -2,7 +2,12 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from Home.forms import CreateUserForm,EditProfileForm
+from django.contrib.auth.decorators import login_required
+from Home.forms import CreateUserForm
+
+
+from django.contrib import messages
+
 
 # Create your views here.
 def login_view(request):
@@ -21,30 +26,49 @@ def login_view(request):
         
     return render(request, 'login-register.html', {'form': form, 'form_type': 'login'})
 
+
 def logout_view(request):
     logout(request)
-    messages.success(request,"logout successfully")
-    return redirect("/login")
+    return redirect('login')
 
 def register_view(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'You have successfully registered.')
             return redirect('/login')
+        else:
+            messages.error(request, 'There was an error registering. Please try again.')
     else:
         form = CreateUserForm()
     return render(request, 'login-register.html', {'form': form, 'form_type': 'register'})
 
-def edit_profile_view(request):
 
+@login_required
+def update_profile(request):
     if request.method == 'POST':
-        form = EditProfileForm(request.POST,instance = request.user)
-        if form.is_valid():
-            form.save()
-            return redirect("/my-account")
-    else:
-        form = EditProfileForm(instance = request.user)
-    
-    return render(request, 'my-account.html', {'form': form, 'form_type': 'edit'})
+        user = request.user
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.email = request.POST.get('email', user.email)
+        user.phone_number = request.POST.get('phone_number',user.phone_number)
+        password = request.POST.get('password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if password and user.check_password(password):
+            if new_password and new_password == confirm_password:
+                user.set_password(new_password)
+                messages.success(request, 'Password changed successfully')
+            user.save()
+            messages.success(request, 'Profile updated successfully')
+        elif password or new_password or confirm_password:
+            messages.error(request, 'Invalid password')
+        else:
+            user.save()
+            messages.success(request, 'Profile updated successfully')
+    return redirect('my-account')
+
+
 

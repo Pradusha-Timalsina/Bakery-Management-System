@@ -105,14 +105,19 @@
                                 <ul class="d-flex">
                                     <li><i class="icofont-phone"></i> <a href="tel:+00123456789">+00 123 456 789</a>
                                     </li>
-                                    <li><i class="icofont-envelope"></i> <a href="mailto:demo@example.com">{{email}}</a></li>
-                                    <li class="account_link"> <i class="icofont-user-alt-7"></i><a href="{% url 'acccount' %}">Account</a>
+                                    <li><i class="icofont-envelope"></i> <a href="mailto:{{ 'demo@example.com' }}">{{ email|default:'user@example.com' }}</a></li>
+    
+                                    {% if user.is_authenticated %}
+                                    <li class="account_link"> <i class="icofont-user-alt-7"></i><a href="{% url 'acccount'%}">Account</a>
                                         <ul class="dropdown_account_link">
                                             <li><a href="{% url 'acccount' %}">My Account</a></li>
-                                            <li><a href="{% url 'login' %}">Login</a></li>
-                                            <li><a href="{% url 'register' %}">Register</a></li>
+                                            <li><a href="{% url 'logout' %}">Logout</a></li>
                                         </ul>
                                     </li>
+                                    {% else %}
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'register' %}">Register</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -253,6 +258,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
+
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
                 {% if form_type == 'login' %}
                 <form method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
@@ -309,10 +322,17 @@
                                 {{form.username}}
                             </div>
                             
+                            <div class="col-md-6 col-12">
+                                <label>Phone Number</label>
+                                {{form.phone_number}}
+                            </div>
+                           
+
                             <div class="col-md-12">
                                 <label>Email Address*</label>
                                 {{form.email}}
                             </div>
+
                             <div class="col-md-6">
                                 <label>Password</label>
                                 {{form.password1}}

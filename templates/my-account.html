@@ -106,14 +106,19 @@
                                 <ul class="d-flex">
                                     <li><i class="icofont-phone"></i> <a href="tel:+00123456789">+00 123 456 789</a>
                                     </li>
-                                    <li><i class="icofont-envelope"></i> <a href="mailto:demo@example.com">{{email}}</a></li>
+                                    <li><i class="icofont-envelope"></i> <a href="mailto:{{ 'demo@example.com' }}">{{ email|default:'user@example.com' }}</a></li>
+    
+                                    {% if user.is_authenticated %}
                                     <li class="account_link"> <i class="icofont-user-alt-7"></i><a href="{% url 'acccount'%}">Account</a>
                                         <ul class="dropdown_account_link">
-                                            <li><a href="{% url 'acccount'%}">My Account</a></li>
-                                            <li><a href="{% url 'login'%}">Login</a></li>
-                                            <li><a href="{% url 'register'%}">Register</a></li>
+                                            <li><a href="{% url 'acccount' %}">My Account</a></li>
+                                            <li><a href="{% url 'logout' %}">Logout</a></li>
                                         </ul>
                                     </li>
+                                    {% else %}
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'register' %}">Register</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -267,16 +272,14 @@
                         <li class="nav-item">
                             <a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Account Details</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="account-logout-tab" href="{% url 'login'%}" role="tab" aria-selected="false">Logout</a>
-                        </li>
+                       
                     </ul>
                 </div>
                 <div class="col-lg-9">
                     <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
                         <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
                             <div class="myaccount-dashboard">
-                                <p>Hello <b>Bucker</b> (not Bucker? <a href="login-register.html">Sign
+                                <p>Hello <b>{{first_name}}</b> (not {{first_name}}? <a href="{{"url 'login'"}}">Sign
                                         out</a>)</p>
                                 <p>From your account dashboard you can view your recent orders, manage your shipping and billing addresses and <a href="javascript:void(0)">edit your password and account
                                         details</a>.</p>
@@ -337,33 +340,38 @@
                         </div>
                         <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
                             <div class="myaccount-details">
-                                <form action="#" class="myaccount-form" method = "POST">
+                                <form action="{% url 'update_profile' %}" class="myaccount-form" method="POST">
+                                    {% csrf_token %}
                                     <div class="myaccount-form-inner">
                                         <div class="single-input single-input-half">
                                             <label>First Name*</label>
-                                            <input type="text" value = "{{user.first_name}}">
+                                            <input type="text" name="first_name" value="{{ user.first_name }}">
                                         </div>
                                         <div class="single-input single-input-half">
                                             <label>Last Name*</label>
-                                            <input type="text" value = "{{user.last_name}}">
+                                            <input type="text" name="last_name" value="{{ user.last_name }}">
                                         </div>
                                         <div class="single-input">
                                             <label>Email*</label>
-                                            <input type="email" value = "{{user.email}}">
+                                            <input type="email" name="email" value="{{ user.email }}">
+                                        </div>
+
+                                        <div class="single-input">
+                                            <label>Phone Number</label>
+                                            <input type="text" name="phone_number" value="{{user.phone_number}}">
+                                        </div>
+
+                                        <div class="single-input">
+                                            <label>Current Password(leave blank to leave unchanged)</label>
+                                            <input type="password" name="password">
                                         </div>
                                         <div class="single-input">
-                                            <label>Current Password(leave blank to leave
-                                                unchanged)</label>
-                                            <input type="password">
-                                        </div>
-                                        <div class="single-input">
-                                            <label>New Password (leave blank to leave
-                                                unchanged)</label>
-                                            <input type="password">
+                                            <label>New Password (leave blank to leave unchanged)</label>
+                                            <input type="password" name="new_password">
                                         </div>
                                         <div class="single-input">
                                             <label>Confirm New Password</label>
-                                            <input type="password">
+                                            <input type="password" name="confirm_password">
                                         </div>
                                         <div class="single-input">
                                             <button class="btn custom-btn" type="submit">
@@ -372,6 +380,7 @@
                                         </div>
                                     </div>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>

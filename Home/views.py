@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate,login,logout
-from .models import Product,Customer
+from .models import Product
 
 # Create your views here.
 
@@ -66,21 +65,3 @@ def product_view(request):
     context = {'products':product,
                'email': email}
     return render(request,"single-product.html",context=context)
-
-
-from django.urls import reverse_lazy
-from django.views.generic.edit import FormView
-from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCompleteView
-from .forms import MySetPasswordForm
-from django.contrib import messages
-
-class MyPasswordResetConfirmView(PasswordResetConfirmView):
-    form_class = MySetPasswordForm
-    success_url = reverse_lazy('password_reset_complete') # This is the URL to redirect to
-    template_name = 'reset.html'
-    redirect_field_name = 'reset_password_complete'  # specify the name of the GET parameter
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        messages.success(self.request, "Your password has been reset.")
-        return response

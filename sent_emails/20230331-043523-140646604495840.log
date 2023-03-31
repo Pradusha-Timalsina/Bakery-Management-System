@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: rushalchitrakar25@gmail.com
+Date: Fri, 31 Mar 2023 04:35:23 -0000
+Message-ID: <168023732310.7328.8573968212410291024@fakron-Inspiron-5570>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/reset/Mg/blwsqz-68e981639e2108e8beca0e124dcb8815/
+
+Your username, in case you’ve forgotten: rushal
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

@@ -15,9 +15,4 @@ class CreateUserForm(UserCreationForm):
 
 
 
-
-class MySetPasswordForm(SetPasswordForm):
-    password1 = forms.CharField(label=("New password"), widget=forms.PasswordInput)
-    password2 = forms.CharField(label=("New password confirmation"), widget=forms.PasswordInput)
-
         

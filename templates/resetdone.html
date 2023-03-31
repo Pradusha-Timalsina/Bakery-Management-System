@@ -242,10 +242,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs_text">
-                        <h1>Login | Register</h1>
+                        <h1>Reset Messager</h1>
                         <ul>
                             <li><a href="{% url 'index'%}">Home </a></li>
-                            <li> // Password | Reset</li>
+                            <li> Reset Message</li>
                         </ul>
                     </div>
                 </div>
@@ -262,14 +262,9 @@
                             <h4 class="login-title">Password reset</h4>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <p>Your password has been reset. You can <a href="{% url 'login'%}">log in now.</a></p>
+                                    <p>Your password has been reset. You can <a href="{% url 'login'%}" style="color: red;">log in now</a>.</p>
                                 </div>
                                 
-                                <div class="col-lg-19 pt-5">
-                                    <a href="{% url 'login'%}">
-                                        <button class="btn custom-btn md-size">Login</button>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </form>

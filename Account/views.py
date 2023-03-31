@@ -4,10 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Home.forms import CreateUserForm
-
-
 from django.contrib import messages
-
 
 # Create your views here.
 def login_view(request):
@@ -68,7 +65,7 @@ def update_profile(request):
         else:
             user.save()
             messages.success(request, 'Profile updated successfully')
-    return redirect('my-account')
+    return redirect('index')
 
 
 

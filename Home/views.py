@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from .models import Product
+from django.shortcuts import get_object_or_404, render
+from .models import Customer, Product,Order
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -56,12 +57,30 @@ def my_account_view(request):
                }
     return render(request,"my-account.html",context=context)
 
-def product_view(request):
-    product = Product.objects.all()
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
     email = None
     if request.user.is_authenticated:
         email = request.user.email
  
-    context = {'products':product,
+    context = {'product':product,
                'email': email}
     return render(request,"single-product.html",context=context)
+
+@login_required
+def cart(request):
+    email = None
+    if request.user.is_authenticated:
+        email = request.user.email
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+
+        for item in items:
+            print(item.Product)
+      
+    else:
+        items = []
+    context = {'items': items, 'email': email}
+    return render(request, "cart.html", context=context)
+

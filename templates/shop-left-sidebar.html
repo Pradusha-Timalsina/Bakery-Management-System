@@ -184,7 +184,7 @@
                     <a href="#"><img src="{% static 'img/product/product1.png'%}" alt=""></a>
                 </div>
                 <div class="cart_info">
-                    <a href="{%url 'product'%}">Primis In Faucibus</a>
+                    <a href="#">Primis In Faucibus</a>
                     <p>1 x <span> $65.00 </span></p>
                 </div>
                 <div class="cart_remove">
@@ -193,10 +193,10 @@
             </div>
             <div class="cart_item">
                 <div class="cart_img">
-                    <a href="{%url 'product'%}"><img src="{% static 'img/product/product2.png'%}" alt=""></a>
+                    <a href="#"><img src="{% static 'img/product/product2.png'%}" alt=""></a>
                 </div>
                 <div class="cart_info">
-                    <a href="{%url 'product'%}">Letraset Sheets</a>
+                    <a href="#">Letraset Sheets</a>
                     <p>1 x <span> $60.00 </span></p>
                 </div>
                 <div class="cart_remove">
@@ -363,7 +363,7 @@
                                             <article class="single_product wow fadeInUp" data-wow-delay="0.1s" data-wow-duration="1.1s">
                                                 <figure>
                                                     <div class="product_thumb">
-                                                        <a href="{% url 'product' %}"><img
+                                                        <a href="{% url 'product' product.id %}"><img
                                                                 src="{{product.image.url}}" alt=""></a>
                                                         <div class="action_links">
                                                             <ul class="d-flex justify-content-center">
@@ -377,7 +377,7 @@
                                                         </div>
                                                     </div>
                                                     <figcaption class="product_content text-center">
-                                                        <h4><a href="{% url 'product' %}">{{product.name}}</a></h4>
+                                                        <h4><a href="{% url 'product' product.id %}">{{product.name}}</a></h4>
                                                         <div class="price_box">
                                                             <span class="current_price">${{product.price}}</span>
                                                         </div>
@@ -393,7 +393,7 @@
                                         <article class="product_list_items border-bottom">
                                             <figure class="product_list_flex d-flex align-items-center">
                                                 <div class="product_thumb">
-                                                    <a href="single-product.html"><img
+                                                    <a href="#"><img
                                                             src="{% static 'img/product/product12.png'%}" alt=""></a>
                                                     <div class="action_links">
                                                         <ul class="d-flex justify-content-center">
@@ -407,7 +407,7 @@
                                                     </div>
                                                 </div>
                                                 <figcaption class="product_list_content">
-                                                    <h4><a href="single-product.html">Products Name Here</a></h4>
+                                                    <h4><a href="#">Products Name Here</a></h4>
                                                     <div class="product__ratting">
                                                         <ul class="d-flex">
                                                             <li><a href="#"><i class="ion-ios-star"></i></a></li>

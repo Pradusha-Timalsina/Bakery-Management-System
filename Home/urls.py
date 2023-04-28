@@ -8,9 +8,10 @@ urlpatterns = [
     path("about",views.about_view,name="about"),
     path("shop-left-sidebar",views.shop_view,name="shop"),
     path("contact",views.contact_view,name="contact"),
-    path("product",views.product_view,name="product"),
+    path("shop-left-sidebar/<int:product_id>",views.product_detail,name="product"),
     path("my-account",views.my_account_view,name="acccount"),
     path('update', update_profile, name='update_profile'),
+    path('cart',views.cart,name="cart"),
 
 
     path('login/', login_view, name='login'),

@@ -1,0 +1,96 @@
+body{
+    background-color: rgb(222, 216, 216) !important;
+}
+h3{
+    position:absolute;
+    top: 8vmax;
+    left:20vmax;
+}
+.top{
+    display: flex;
+    flex-direction: row;
+}
+.top-1{
+position: absolute;
+height: 120px;
+width: 100px;
+background-color:white;
+top: 12vmax;
+left:20vmax;
+}
+.top-2{
+    position: absolute;
+    height: 120px;
+    width: 100px;
+    background-color:white;
+    top: 12vmax;
+    left:26.8vmax;
+    opacity: 70%;
+    }
+
+.bottom{
+    position: absolute;
+    height:400px;
+    width: 700px;
+    background-color: rgb(255, 255, 255);
+    top: 19vmax;
+    left: 20vmax;
+    box-shadow: 5px 5px ;
+}
+.bottom>form{
+    position: relative;
+    margin:1.5vmax;
+
+}
+form>div>div:nth-child(2){
+    position: relative;
+    left: 115px;
+    width:100px;
+
+}
+.bottom>form>button{
+    position: relative;
+   background-color: orange;
+   border: none;
+
+}
+.right{
+    position: absolute;
+    height: 170px;
+    width:300px;
+    right:11vmax;
+    top: 12vmax;
+    background-color: white;
+}
+.right>h3{
+    position: relative;
+    top: 5px;
+    left: 15px;
+}
+.right>h4{
+    position: relative;
+    bottom: -60px;
+    left: 15px;
+}
+.top-1 h3{
+    position: relative;
+    top: 1vmax;
+    left: 1vmax;
+    z-index: 1100;
+}
+.top-1 img{
+    position: relative;
+    left:25px;
+    top: 9px;
+}
+.top-2 h2{
+    position: relative;
+    top: 0vmax;
+    left: 1vmax;
+    z-index: 1100;
+}
+.top-2 img{
+    position: relative;
+    left:20px;
+    top: 5px;
+}

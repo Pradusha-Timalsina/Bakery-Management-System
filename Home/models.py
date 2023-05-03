@@ -13,15 +13,24 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+class Category(models.Model):
+    auto_increment_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200,null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=200,null=True)
     price = models.FloatField()
     description = models.TextField(max_length=250,null=True)
     image = models.ImageField(null=True,blank=True,upload_to='images/')
     date = models.DateField(auto_created=True,auto_now_add=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.category.name})"
     
     @property
     def imageURL(self):
@@ -30,6 +39,7 @@ class Product(models.Model):
         except:
             url = ''
         return url
+
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)

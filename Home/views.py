@@ -65,6 +65,7 @@ def about(request):
 def shop(request):
     email = None
     products = Product.objects.all()
+    category = Category.objects.all()
     if request.user.is_authenticated:
         email = request.user.email
         customer = request.user.customer
@@ -85,6 +86,7 @@ def shop(request):
         'email':email,
         'products':products,
         'cartItems':cartItems,
+        'category':category,
     }
     return render(request,'shop-left-sidebar.html',context=context)
 
@@ -97,6 +99,12 @@ def product_detail(request, product_id):
     context = {'product':product,
                'email': email}
     return render(request,"single-product.html",context=context)
+
+def product_list(request, category):
+    products = Product.objects.filter(category__name=category)
+    context = {'products': products, 'category': category}
+    return render(request, 'shop2.html', context)
+
 
 def contact(request):
     email=None

@@ -43,7 +43,6 @@ def register_view(request):
         # Render registration page
         return render(request, 'register.html')
 
-
 def logout_view(request):
     logout(request)
     return redirect('login')

@@ -55,7 +55,7 @@
 <body>
 <div class="login-box">
     <h2>Customer Registration</h2>
-    <form method="post">
+    <form method="post" id="registration-form">
         {% csrf_token %}
         <label for="name">Name:</label>
         <input type="text" id="name" name="name"><br>
@@ -69,9 +69,68 @@
       </form>
       
 </div>
+<script>
 
+  document.getElementById("registration-form").addEventListener("submit", function(event) {
+    var nameInput = document.getElementById("name");
+    if (nameInput.value == "") {
+      alert("Please enter your name.");
+      event.preventDefault();
+      return false;
+    }
+  
+    var usernameInput = document.getElementById("username");
+    if (usernameInput.value == "") {
+      alert("Please enter a username.");
+      event.preventDefault();
+      return false;
+    }
+  
+    var emailInput = document.getElementById("email");
+    if (emailInput.value == "") {
+      alert("Please enter your email.");
+      event.preventDefault();
+      return false;
+    }
+  
+    var passwordInput = document.getElementById("password");
+    if (passwordInput.value == "") {
+      alert("Please enter a password.");
+      event.preventDefault();
+      return false;
+    }
 
+  });
+</script>
 
+<!-- Include the Toastify CSS and JS files -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    const form = document.getElementById('registration-form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch('/register/', {
+            method: 'POST',
+            body: new FormData(form),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Toastify({
+                    text: 'You have successfully registered!',
+                    duration: 3000,
+                    gravity: 'bottom',
+                    position: 'right',
+                    backgroundColor: 'green',
+                }).showToast();
+                form.reset();
+            }
+        })
+        .catch(error => console.error(error));
+    });
+</script>
 
 
 </body>

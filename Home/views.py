@@ -220,6 +220,11 @@ def updateItem(request):
     action = data['action']
     print('Action:',action)
     print('Product:',productId)
+
+    customer = request.user.customer
+    product = Product.objects.get(id=productId)
+    order,created = Order.objects.get_or_create(customer=customer,complete = False)
+    orderItem, created = OrderItem.objects.get_or_create(order=order,Product=product)
     if action == "add":
         orderItem.quantity = (orderItem.quantity + 1)
     

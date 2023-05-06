@@ -132,7 +132,7 @@
 			{% endfor %}
 			<h5>Items:{{order.get_cart_items}}</h5>
 			<h5>Total: ${{order.get_cart_total|floatformat:2}}</h5>
-			<a href="{% url 'index' %}" class="btn btn-primary btn-lg mt-3" id="place-order-btn">Place Order</a>
+			<a href="{% url 'payment' %}" class="btn btn-primary btn-lg mt-3" id="place-order-btn">Place Order</a>
 		  </div> 
 		</div>
 	  </div>

@@ -304,21 +304,15 @@
                                     <figure>
                                         <div class="product_thumb">
                                             <a href="#"><img src="{{product.imageURL}}" alt=""></a>
-                                            <div class="action_links">
-                                                <ul class="d-flex justify-content-center">
-                                                    <li class="add_to_cart"><a href="cart.html" title="Add to cart">
-                                                            <span class="pe-7s-shopbag"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a>
-                                                    </li>
-                                                    <li class="quick_button"><a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#modal_box"> <span
-                                                                class="pe-7s-look"></span></a></li>
-                                                </ul>
-                                            </div>
+                                        
                                         </div>
                                         <figcaption class="product_content text-center">
                                             <h4><a href="single-product.html">{{product.name}}</a></h4>
                                             <div class="price_box">
                                                 <span class="current_price">${{product.price|floatformat:2}}</span>
+                                            </div>
+                                            <div class="product_buttons">
+                                                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                                             </div>
                                         </figcaption>
                                     </figure>

@@ -120,7 +120,7 @@
     
         <div class="checkout">
                 <h2>Billing details</h2>
-                <form action="{% url 'ordersummary'%}" method="post">
+                <form id = "form" method="post">
                     {% csrf_token %}
                     <div class="form-group">
                       <label for="name">Name</label>
@@ -176,13 +176,59 @@
                     </div>
 
                     <div class="form-group">
-                    <input type="submit" value="Submit">
+                    <input id = "submit" type="submit" value="Submit">
                     </div>
             </form>
+        </div>
         </body>
     <!-- JS
 ============================================ -->
 
+<script type = "text/javascript">
+
+    var form = document.getElementById('form');
+    form.addEventListener('submit',function(e){
+        e.preventDefault()
+        console.log('Form submitted...')
+    })
+
+    document.getElementById('submit')form.addEventListener('click',funtion(e){
+        submitFormData()
+    })
+
+    function submitFormData(){
+        console.log('Payment button clicked')
+
+        var userFormData = {
+            'name':null,
+            'email':null,
+            'total':total,
+            
+        }
+        var shippingInfo = {
+            'address':null,
+            'city':null,
+            'state':null,
+            'zipcode':null,
+            
+        }
+
+        if(shipping != "False"){
+            shippingInfo.address= form.address.value
+            shippingInfo.city= form.city.value
+            shippingInfo.state= form.state.value
+            shippingInfo.zipcode= form.zipcode.value
+
+            }
+        
+        if(user=='AnonymousUser'){
+            userFormData.name= form.name.value
+            userFormData.email= form.email.value
+            
+
+            }
+        }
+    </script>
     <script src="{% static 'js/vendor/jquery-3.6.0.min.js'%}"></script>
     <script src="{% static 'js/vendor/jquery-migrate-3.3.2.min.js'%}"></script>
     <script src="{% static 'js/vendor/bootstrap.bundle.min.js'%}"></script>
@@ -198,7 +244,6 @@
 
     <!-- Main JS -->
     <script src="{% static 'js/main.js'%}"></script>
-
 
 </body>
 

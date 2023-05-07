@@ -1,11 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Payment Successful</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="payment_success.css">
-
   <style>
     body {
       background-color: #f2f2f2;
@@ -74,7 +73,7 @@
 	<div class="container">
 		<div class="box">
 			<div class="success-img">
-				<img src="download.jpg" alt="Success Image">
+				<img src="{% static 'img/download.jpg' %}" alt="Success Image">
 			</div>
 			<div class="success-details">
 				<h1>Payment Successful!</h1>

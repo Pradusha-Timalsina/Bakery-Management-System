@@ -5,9 +5,8 @@ import json
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 import requests
-from django.views.generic import View
 from reportlab.pdfgen import canvas
-
+import random
 # Create your views here.
 
 
@@ -290,8 +289,11 @@ def payment(request):
             state=shipping_details['state'],
             zipcode=shipping_details['zip'],
         )
-        # Clear the stored shipping details from the session variable or cache
 
+        # transaction_id = random.randint(100000, 999999)
+
+        # # Assign the transaction id to the order instance
+        # order.transaction_id = transaction_id
 
         # Add success message to session
         messages.success(request, 'Payment successful!')
@@ -303,7 +305,18 @@ def payment(request):
 
 
 def payment_success(request):
-    return render(request, 'payment_success.html')
+    customer = request.user.customer
+    order = Order.objects.create(customer=customer, complete=True)
+    transaction_id = order.transaction_id
+    amount = order.get_cart_total
+
+    print(transaction_id)
+    print(amount)
+    context = {
+        'transaction_id':transaction_id,
+        'amount':amount,
+    }
+    return render(request, 'payment_success.html',context=context)
 
 def khalti_payment(request):
     shipping_details = request.session.get('shipping_details', {})
@@ -347,6 +360,8 @@ def khalti_payment(request):
             order.complete = True
             order.save()
             shipping_address.save()
+            print(order.transaction_id)
+            print("hello")
             
             # Add success message to session
             messages.success(request, 'Payment successful!')

@@ -1,11 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate,logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from Home.models import Customer
 from django.contrib import messages
-
-from .forms import CustomerForm
 from django.contrib.auth.models import User
 
 def login_view(request):
@@ -24,6 +21,8 @@ def login_view(request):
     else:
         return render(request, 'login.html')
 
+
+
 def register_view(request):
     if request.method == 'POST':
         # Get registration form data
@@ -31,17 +30,27 @@ def register_view(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        # Create new User object
-        user = User.objects.create_user(username, email, password)
-        # Create new Customer object and associate it with User object
-        customer = Customer.objects.create(user=user, name=name, username=username, email=email, password=password)
-        # Log in user and redirect to index page
-        login(request, user)
-        messages.success(request, 'You have successfully registered.')
-        return JsonResponse({'success': True})
+        
+        if not name or not username or not email or not password:
+            # Return JSON response indicating form data is invalid
+            return JsonResponse({'success': False, 'message': 'Invalid form data'})
+        
+        try:
+            # Create new User object
+            user = User.objects.create_user(username, email, password)
+            # Create new Customer object and associate it with User object
+            customer = Customer.objects.create(user=user, name=name, username=username, email=email, password=password)
+            # Log in user and redirect to index page
+            login(request, user)
+            # Return JSON response indicating success
+            return JsonResponse({'success': True, 'message': 'You have successfully registered.'})
+        except Exception as e:
+            # Return JSON response indicating registration failed
+            return JsonResponse({'success': False, 'message': str(e)})
     else:
         # Render registration page
         return render(request, 'register.html')
+
 
 def logout_view(request):
     logout(request)

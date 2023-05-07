@@ -131,19 +131,16 @@
                 <div class="col-12">
                     <div class="main_header d-flex justify-content-between align-items-center">
                         <div class="header_logo">
-                            <a class="sticky_none" href="index.html"><img src="{% static 'img/logo/logo.png'%}" alt=""></a>
+                            <a class="sticky_none" href="{% url "index" %}"><img src="{% static 'img/logo/logo.png'%}" alt=""></a>
                         </div>
                         <!--main menu start-->
                         <div class="main_menu d-none d-lg-block">
                             <nav>
                                 <ul class="d-flex">
-                                    <li><a href="{% url 'index'%}">Home</a>
-                                    </li>
-                                    <li><a href="{% url 'about'%}">About</a></li>
-                                    <li class="megamenu-holder">
-                                        <a class="active" href="{% url 'shop'%}">Shop</a>
-                                    </li>
-                                  
+                                    <li><a class="active" href="{% url 'index'%}">Home</a></li>
+                                    <li><a href="{% url 'about' %}">About</a></li>
+                                    <li> <a href="{% url 'shop' %}">Shop</a></li>
+                                  </li>
                                     <li><a href="{% url 'contact'%}">Contact</a></li>
                                 </ul>
                             </nav>
@@ -151,11 +148,13 @@
                         <!--main menu end-->
                         <div class="header_account">
                             <ul class="d-flex">
-                                <li class="header_search"><a href="javascript:void(0)"><i class="pe-7s-search"></i></a>
-                                </li>
-                                <li class="header_wishlist"><a href="wishlist.html"><i class="pe-7s-like"></i></a></li>
-                                <li class="shopping_cart"><a href="javascript:void(0)"><i class="pe-7s-shopbag"></i></a>
-                                    <span class="item_count">2</span>
+                                <li class="shopping_cart">
+                                    <a href="{% url 'cart' %}">
+                                        <span class="item_count">{{ cartItems }}</span>
+                                        <span class="cart_logo" style="display: inline-block;">
+                                            <img src="{% static 'img/logo/cart.png' %}" alt="Cart Logo" style="width: 20px; height: 20px;">
+                                        </span>
+                                    </a>
                                 </li>
                             </ul>
                             <div class="canvas_open">

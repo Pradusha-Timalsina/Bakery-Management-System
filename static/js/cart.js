@@ -34,10 +34,12 @@ function updateUserOrder(productId,action){
         })
     })
     .then((response) =>{
+        window.location.reload()
         return response.json()
     })
     .then((data) =>{
         console.log('data:',data)
+        window.location.reload()
         
     })
 }

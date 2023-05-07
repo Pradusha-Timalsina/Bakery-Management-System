@@ -215,7 +215,8 @@
                                         details</a>.</p>
                             </div>
                         </div>
-                        <div class="myaccount-orders">
+
+                        <div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
                             <h4 class="small-title">MY ORDERS</h4>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
@@ -234,7 +235,7 @@
                                                         <td><a class="account-order-id" href="#">{{ order.id }}</a></td>
                                                         <td>{{ order.date_orderd|date:"M d, Y" }}</td>
                                                         <td>Completed</td>
-                                                        <td>${{ order.get_cart_total }} for {{ order.get_cart_items }} items</td>
+                                                        <td>${{ cartTotal }}</td>
                                                         <td><a href="{% url 'generate_pdf' order.id %}" target="_blank" class="btn btn-secondary btn-sm">Generate PDF</a></td>
                                                     </tr>
                                                 {% endif %}
@@ -286,7 +287,7 @@
 
                                         <div class="single-input">
                                             <label>Phone Number</label>
-                                            <input type="text" name="phone_number" value="{{user.phone_number}}">
+                                            <input type="text" name="phone_number" value="{{phone}}">
                                         </div>
 
                                         <div class="single-input">

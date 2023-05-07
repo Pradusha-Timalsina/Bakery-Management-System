@@ -18,7 +18,7 @@ def home(request):
     if request.user.is_authenticated:
         email = request.user.email
         customer = request.user.customer
-        order = Order.objects.filter(customer=customer, complete=False).first()
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
@@ -97,13 +97,40 @@ def shop(request):
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    related_products = Product.objects.filter(category=product.category).exclude(id=product.id)
     email = None
+    
+    if request.method == 'POST':
+        rating = int(request.POST.get('rating'))
+        comment = request.POST.get('comment')
+        user = request.user
+        review = Review(product=product, user=user, rating=rating, comment=comment)
+        review.save()
+        
     if request.user.is_authenticated:
         email = request.user.email
- 
-    context = {'product':product,
-               'email': email}
-    return render(request,"single-product.html",context=context)
+        customer = request.user.customer
+        order = Order.objects.filter(customer=customer, complete=False).first()
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {
+            'get_cart_total':0,
+            'get_cart_items':0,
+            'shipping': False,
+        }
+        cartItems = order['get_cart_items']
+    
+    context = {
+        'order':order,
+        'email':email,
+        'product':product,
+        'related_products':related_products,
+        'cartItems':cartItems,
+    }
+    return render(request, 'single-product.html', context=context)
+
 
 def product_list(request, category):
     products = Product.objects.filter(category__name=category)
@@ -143,6 +170,8 @@ def account(request):
         email = request.user.email
         customer = request.user.customer
         name = customer.name
+        phone = customer.phone
+        
         orders = Order.objects.filter(customer=customer).order_by('-date_orderd')  # get all orders of the customer and order them by date_orderd
         order = Order.objects.filter(customer=customer, complete=False).first()
         items = order.orderitem_set.all()

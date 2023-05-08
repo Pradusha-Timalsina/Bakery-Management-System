@@ -25,11 +25,9 @@ urlpatterns = [
 
     path('generate-pdf/<int:order_id>/', views.generate_pdf, name='generate_pdf'),
 
-
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout/', logout_view, name='logout'),
-
 
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='password_reset_form.html',

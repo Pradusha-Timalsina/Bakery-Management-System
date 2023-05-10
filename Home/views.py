@@ -70,6 +70,7 @@ def about(request):
 def shop(request):
     email = None
     products = Product.objects.all()
+    total = Product.objects.count()
     category = Category.objects.all()
     if request.user.is_authenticated:
         email = request.user.email
@@ -92,6 +93,7 @@ def shop(request):
         'products':products,
         'cartItems':cartItems,
         'category':category,
+        'total':total,
     }
     return render(request,'shop-left-sidebar.html',context=context)
 
@@ -408,88 +410,56 @@ def khalti_payment(request):
     return render(request, 'khalti.html', context)
 
 
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib import colors
-from reportlab.platypus import Table, TableStyle
-from io import BytesIO
+from django.template.loader import render_to_string
 from django.http import HttpResponse
-from .models import Order
+from io import BytesIO
+from reportlab.pdfgen import canvas
 
-def generate_pdf(request, order_id):
+def generate_bill(request, order_id):
+    order = Order.objects.get(id=order_id)
+    items = order.orderitem_set.all()
+
+    # Render the HTML template to a string
+    html_string = render_to_string('order_pdf.html', {'order': order, 'items': items})
+
     # Create a file-like buffer to receive PDF data.
     buffer = BytesIO()
 
     # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer, pagesize=letter)
+    p = canvas.Canvas(buffer)
 
-    # Get the order details from the database.
-    order = Order.objects.get(id=order_id)
+    # Create a PDF from the HTML template
+    p.drawString(100, 750, "Order Invoice")
+    p.drawString(100, 700, "Order ID: {}".format(order.id))
+    p.drawString(100, 650, "User: {}".format(order.customer.name))
+    p.drawString(100, 600, "Status: {}".format(order.complete))
+    p.drawString(100, 550, "Order Date: {}".format(order.date_orderd.strftime('%m/%d/%Y %I:%M %p')))
+    p.drawString(100, 500, "Items:")
+   
+    y = 470
+    print("Order ID:", order.id)
+    print("Customer:", order.customer.name)
+    print("Status:", order.complete)
+    print("Order Date:", order.date_orderd.strftime('%m/%d/%Y %I:%M %p'))
+    print("Items:", items)
 
-    # Define the styles to use in the PDF.
-    styles = {
-        'title': {
-            'fontName': 'Helvetica-Bold',
-            'fontSize': 20,
-            'leading': 24,
-            'alignment': 1,
-        },
-        'heading': {
-            'fontName': 'Helvetica-Bold',
-            'fontSize': 14,
-            'leading': 16,
-            'alignment': 0,
-        },
-        'cell': {
-            'fontName': 'Helvetica',
-            'fontSize': 12,
-            'leading': 14,
-            'alignment': 0,
-        },
-    }
+    for item in items:
+        print(item.name)
+        p.drawString(150, y, item.product.name)
+        p.drawString(300, y, str(item.product.price))
+        y -= 30
 
-    # Define the table data to use in the PDF.
-    data = [
-        ['Order ID:', order.id],
-        ['Order Date:', order.date_orderd.strftime('%m/%d/%Y %I:%M %p')],
-        ['Order Status:', order.complete],
-        ['Order Total:', '${:,.2f}'.format(order.get_cart_total)],
-    ]
-
-    # Define the table styles to use in the PDF.
-    table_style = TableStyle([
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
-        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
-        ('GRID', (0, 0), (-1, -1), 1, colors.black),
-        ('FONTSIZE', (0, 0), (-1, -1), 12),
-        ('LEADING', (0, 0), (-1, -1), 14),
-    ])
-
-    # Create the table and apply the styles to it.
-    table = Table(data)
-    table.setStyle(table_style)
-
-    # Add the title to the PDF.
-    p.setFont(styles['title']['fontName'], styles['title']['fontSize'])
-    p.drawString(2.75 * inch, 10.5 * inch, 'Order Summary')
-
-    # Add the table to the PDF.
-    table.wrapOn(p, 6.5 * inch, 4.5 * inch)
-    table.drawOn(p, 1.25 * inch, 9.5 * inch)
+    p.drawString(300, y-30, "Total Quantity: {}".format(order.get_cart_items))
+    p.drawString(300, y-50, "Total: ${:,.2f}".format(order.get_cart_total))
 
     # Close the PDF object cleanly, and we're done.
-    p.shoswPage()
+    p.showPage()
     p.save()
 
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="order_{}.pdf"'.format(order.id)
+    # File response with PDF data.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
+    response.write(pdf)
     return response
-
-

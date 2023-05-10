@@ -23,8 +23,8 @@ urlpatterns = [
 
     path('khalti-request',views.khalti_payment,name="khalti"),
 
-    path('generate-pdf/<int:order_id>/', views.generate_pdf, name='generate_pdf'),
-
+    path('generate_bill/<int:order_id>/', views.generate_bill, name='generateBill'),
+    
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout/', logout_view, name='logout'),
